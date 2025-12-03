@@ -1652,6 +1652,39 @@
       const taskSubmitBtn = document.getElementById("taskSubmitBtn");
       let pendingTaskUpdate = null; // Store pending update data
 
+      // Auto-calculate finish date based on start date and duration
+      function calculateFinishDate() {
+        const startDateInput = document.getElementById("startDate");
+        const durationInput = document.getElementById("duration");
+        const finishDateInput = document.getElementById("finishDate");
+
+        const startDate = startDateInput.value;
+        const duration = durationInput.value;
+
+        if (startDate && duration) {
+          const durationMatch = duration.match(/(\d+)/);
+          if (durationMatch) {
+            const days = parseInt(durationMatch[1]);
+            const start = new Date(startDate);
+            start.setDate(start.getDate() + days);
+
+            // Format as YYYY-MM-DD for the date input
+            const year = start.getFullYear();
+            const month = String(start.getMonth() + 1).padStart(2, "0");
+            const day = String(start.getDate()).padStart(2, "0");
+            finishDateInput.value = `${year}-${month}-${day}`;
+          }
+        }
+      }
+
+      // Add event listeners to auto-calculate finish date
+      document
+        .getElementById("startDate")
+        .addEventListener("change", calculateFinishDate);
+      document
+        .getElementById("duration")
+        .addEventListener("input", calculateFinishDate);
+
       taskForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
