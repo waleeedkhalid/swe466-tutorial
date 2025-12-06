@@ -1666,7 +1666,7 @@
           if (durationMatch) {
             const days = parseInt(durationMatch[1]);
             const start = new Date(startDate);
-            start.setDate(start.getDate() + days);
+            start.setDate(start.getDate() + days - 1);
 
             // Format as YYYY-MM-DD for the date input
             const year = start.getFullYear();
